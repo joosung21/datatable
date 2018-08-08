@@ -1,0 +1,25 @@
+{
+  "name": "datatable",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://joosung21@github.com/joosung21/datatable.git"
+  },
+  "author": "Jay Ahn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joosung21/datatable/issues"
+  },
+  "homepage": "https://github.com/joosung21/datatable#readme",
+  "dependencies": {
+    "bootstrap": "^4.1.3",
+    "express": "^4.16.3",
+    "jquery": "^3.3.1",
+    "pug": "^2.0.3"
+  }
+}
