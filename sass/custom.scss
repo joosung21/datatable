@@ -1,8 +1,28 @@
 // Webfont CDN
-@import url('http://fonts.googleapis.com/earlyaccess/notosanskr.css');
+// @import url('http://fonts.googleapis.com/earlyaccess/notosanskr.css');
+@import url('//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css');
 
 // Font
-$font-family-sans-serif: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+// $font-family-sans-serif: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+$font-family-sans-serif: 'Spoqa Han Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+// Body
+$body-color: #4F4F4F;
+
+// Radius
+$border-radius:               0;
+$border-radius-lg:            0;
+$border-radius-sm:            0;
+
+// Text Styles
+$text-muted:                  #aaa;
+
+
+// Pagination
+$pagination-color:                  var(--dark);
+$pagination-hover-color:            var(--dark);
+$pagination-active-bg:              var(--secondary);
+
 
 // Bootstrap and its default variables
 @import "./../node_modules/bootstrap/scss/bootstrap";

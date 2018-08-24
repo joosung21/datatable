@@ -1,2 +1,104 @@
+//----------- Variables -----------//
+$navyblue: #384C67
+$light: #C4C4C4
+$red: #F4516C
+$border-color: #E5E5E5
+$font-color: #4F4F4F
+$white-gray: #f1f3f8
+
+
+//------------ Extends -------------//
+%display-flex
+  display: table-cell // ie9
+  display: -ms-flexbox // ie10
+  display: -webkit-box
+  display: flex
+
+
+
+
+//------------ Initiate -------------//
 html
-  font-size: 12px
+  font-size: 13px
+
+body
+  background-color: $navyblue
+
+// a:focus, a:active, .btn:focus, .btn:active, input:focus, input:active, .custom-select:focus, .custom-select:active, select:active, select:focus, .dropdown:active, .dropdown:focus, .dropdown-menu:active, .dropdown-menu:focus, .selectpicker:active, .selectpicker:focus
+//   outline: none !important
+//   box-shadow: none !important
+.bootstrap-select .btn:focus
+  outline:none !important
+
+label.label-necessary, .label.label-necessary
+  &:after
+    content: '*'
+    color: $red
+    padding-left: .4rem
+    position: relative
+    top: .4rem
+    font-size: 1.2rem
+    line-height: 1rem
+.label.label-necessary
+  &:after
+    color: var(--blue)
+
+.table
+  th,td
+    vertical-align: middle
+
+input::placeholder, textarea::placeholder
+  color: #bbb !important
+
+
+//------------ Components -------------//
+
+.board
+  background: white
+  padding: 2rem
+  box-shadow: 0 .5rem 1rem rgba(black, .15)
+
+.date-picker
+  background: url('/images/ic-calendar-gray.svg') center right .5rem no-repeat
+
+
+//------------ Layout -------------//
+#inner-wrapper
+  position: relative
+  margin-left: 220px
+  width: calc(100% - 220px)
+  min-width: 1000px
+  padding: 3rem
+#left
+  z-index: 2
+  position: fixed
+  padding: 3rem 0
+  top: 0
+  height: 100vh
+  width: 220px
+  background-color: white
+  font-weight: 300
+  box-shadow: 0 .5rem 1rem rgba(black, .15)
+  .nav-group
+    border-top: 1px solid $border-color
+    .group-title, .nav
+      color: $font-color
+      text-decoration: none
+      display: block
+      transition: background .3s
+      i.fa
+        opacity: .5
+      &:hover
+        background-color: $white-gray
+    .group-title
+      padding: .75rem 1.5rem
+      // background: $white-gray
+      position: relative
+    .nav-wrapper
+      .nav
+        padding: .75rem 1.5rem .75rem 3rem
+        &.active
+          background-color: var(--primary)
+          color: white
+          &:after
+

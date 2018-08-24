@@ -1,32 +1,341 @@
-<!DOCTYPE html>
-html(lang="en")
-  head
-    meta(charset="UTF-8")
-    link(rel='shortcut icon', type='image/png', href='images/favicon.png')
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title Datatable
+include ./includes/header.pug
+include ./includes/left.pug
+#inner-wrapper
+  .d-flex.align-items-center.mb-4
+    h3.text-white.font-weight-light 예약목록
+    //- button.btn.btn-primary.btn-lg.ml-auto(type='button', onclick='openInsertBox()')
+      i.fa.fa-plus.fa-lg
+      | 예약추가
+  //- .row
+    .col-12
+      .board#insertBox.mb-5(style='display:none')
+        h5.mb-4 예약추가
+        .row
+          .col-5
+            .form-group.form-row
+              label.col-3.pt-1 지점
+              .col-9
+                select.selectpicker(data-width='100%')
+                  option 강남점
+                  option 역삼점
+                  option 선릉점
+            .form-group.form-row
+              label.col-3.pt-1 단체구분
+              .col-9
+                select.selectpicker(data-width='100%')
+                  option 개인
+                  option 단체
+                  option 여행사
+            .form-group.form-row
+              label.col-3.pt-1 고객구분
+              .col-9
+                select.selectpicker(data-width='100%')
+                  option -
+                  option F.I.T
+                  option Group
+                  option Walk-in
+                  option Online
+                  option B.S.I
+                  option PKG
+                  option SPO
+                  option Dayuse
+                  option M.I.S.E
+                  option Comp
+            .form-group.form-row
+              label.col-3.pt-1 판매유형
+              .col-9
+                select.selectpicker(data-width='100%')
+                  option -
+                  option Reservation
+                  option Walk-in
+          .col-5
+            .form-group.form-row
+              label.label-necessary.col-3.pt-1 도착예정일
+              .col-9
+                input.form-control.date-picker(type='text', value='2018-09-10')
+            .form-group.form-row
+              label.label-necessary.col-3.pt-1 출발예정일
+              .col-9
+                input.form-control.date-picker(type='text', value='2018-09-11')
+            .form-group.form-row
+              label.label-necessary.col-3.pt-1 예약자
+              .col-9
+                input.form-control(type='text')
+            .form-group.form-row
+              label.col-3.pt-1 email
+              .col-9
+                input.form-control(type='text')
+            .form-group.form-row
+              label.col-3.pt-1 mobile
+              .col-9
+                input.form-control(type='text')
+            .form-group.form-row
+              label.label-necessary.col-3.pt-1 인원
+              .col-9
+                .form-row
+                  .col
+                    .input-group
+                      .input-group-prepend
+                        .input-group-text 성인
+                      input.form-control(type='number', min='0', max='99', value='0')
+                  .col
+                    .input-group
+                      .input-group-prepend
+                        .input-group-text 아동
+                      input.form-control(type='number', min='0', max='99', value='0')
+                  .col
+                    .input-group
+                      .input-group-prepend
+                        .input-group-text 유아
+                      input.form-control(type='number', min='0', max='99', value='0')
+          .col-2
+            button.btn.btn-secondary.btn-block(type='button', onclick='closeInsertBox()')
+              i.fa.fa-check.fa-lg.mr-1
+              | 저장
+            button.btn.btn-light.btn-block.mt-3(type='button', onclick='closeInsertBox()')
+              | 취소
 
-    //- styles
-    //- link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css')
-    //- link(rel='stylesheet', href='https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css')
-    //- link(rel='stylesheet', href='/node_modules/sweetalert2/dist/sweetalert2.min.css')
-    link(rel='stylesheet', href='/css/custom.css')
-    link(rel='stylesheet', href='/css/global.css')
+  .board#searchBox.mb-5
+    .form-row
+      .col-6
+        .input-group
+          select.selectpicker(data-width='fit', data-style='btn-secondary')
+            option 예약일
+            option 입실일
+          input.form-control.date-picker(type='text', value='', placeholder='시작일')
+          input.form-control.date-picker(type='text', value='', placeholder='종료일')
+          .input-group-append
+            button.btn.btn-secondary.btn-block(type='button') 불러오기
+      .col-6
+        .input-group
+          .btn-group.btn-group-toggle.mx-4(data-toggle='buttons')
+            label.btn.btn-secondary.active
+              input(type='radio', name='options', autocomplete='off', checked)
+              |  어제
+            label.btn.btn-secondary
+              input(type='radio', name='options', autocomplete='off')
+              |  오늘
+            label.btn.btn-secondary
+              input(type='radio', name='options', autocomplete='off')
+              |  최근 1주
+            label.btn.btn-secondary
+              input(type='radio', name='options', autocomplete='off')
+              |  최근 1개월
+          input.form-control(type='text', placeholder='예약번호/연락처/객실명')
+          .input-group-append
+            button.btn.btn-secondary.btn-block(type='button')
+              i.fa.fa-search.fa-lg
 
-    //- scripts
-    script(src='/node_modules/jquery/dist/jquery.min.js')
-    script(src='/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js')
+  .board.mb-5
+
+    //- h5.mb-4.text-primary Basic Datatable
+    //- table#table1.table.table-striped.table-hover
+    //-   thead
+    //-     tr
+    //-       th guestName
+    //-       th Member#
+    //-       th Arr.Date
+    //-       th Night
+    //-       th Dep.Date
+    //-       th Room#
+    //-       th Rms
+    //-       th Adult
+    //-       th Child
+    //-       th Baby
+
+    //- .py-5
+
+    //- h5.mb-4.text-primary Compact Datatable
+    //- table#table2.table.table-sm.table-striped.table-hover
+    //-   thead
+    //-     tr
+    //-       th 고객명
+    //-       th 멤버#
+    //-       th 체크인
+    //-       th 숙박일
+    //-       th 체크아웃
+    //-       th 객실#
+    //-       th 객실수
+    //-       th 어른
+    //-       th 소아
+    //-       th 유아
+    //- .py-5
+
+    .mb-4
+      .d-flex.align-items-center
+        .form-inline
+          select.selectpicker.mr-4(data-width='fit')
+            option 모두 보기
+            option 20개씩 보기
+            option 50개씩 보기
+            option 100개씩 보기
+          //- span.mx-4 7건
+          label.custom-control.custom-checkbox.mr-4
+            input.custom-control-input(type='checkbox', checked)
+            span.custom-control-label 메모보기
+        button.btn.btn-light.ml-auto(type='button')
+          i.fa.fa-download.fa-lg
+          | 엑셀 다운로드
+
+      //- .form-inline
+        select.selectpicker(data-width='fit')
+          option 모두 보기
+          option 20개씩 보기
+          option 50개씩 보기
+          option 100개씩 보기
+        label.custom-control.custom-checkbox.mr-4
+          input.custom-control-input(type='checkbox')
+          span.custom-control-label.text-muted 체크인 내역
+        label.custom-control.custom-checkbox.mr-4
+          input.custom-control-input(type='checkbox')
+          span.custom-control-label.text-muted 취소/NoShow 제외
+        label.custom-control.custom-checkbox.mr-4
+          input.custom-control-input(type='checkbox')
+          span.custom-control-label.text-muted 예약대기제외
+        label.custom-control.custom-checkbox.mr-4
+          input.custom-control-input(type='checkbox')
+          span.custom-control-label.text-muted 동반고객 및 사전배정 표시
+        label.custom-control.custom-checkbox.mr-4
+          input.custom-control-input(type='checkbox')
+          span.custom-control-label.text-muted 비고한줄 표시
 
 
-  body
-    .display-1 Noto Sans 노토산스 1234567890
-    .display-2 Noto Sans 노토산스 1234567890
-    .display-3 Noto Sans 노토산스 1234567890
-    .display-4 Noto Sans 노토산스 1234567890
-    h1 Noto Sans 노토산스 1234567890
-    h2 Noto Sans 노토산스 1234567890
-    h3 Noto Sans 노토산스 1234567890
-    h4 Noto Sans 노토산스 1234567890
-    h5 Noto Sans 노토산스 1234567890
-    h6 Noto Sans 노토산스 1234567890
-    p Noto Sans 노토산스 1234567890
+    table.table.table-sm.table-hover.text-center(style='font-size: .93rem')
+      thead.bg-light
+        tr
+          th.text-left(style='width:1rem') No
+          th.text-left 예약일
+          th.text-left 예약자
+          th.text-left 객실명
+          th 수량
+          th 체크인
+          th 체크아웃
+          th 박수
+          th 판매가
+          th 입금가
+          th 상태
+          th 호텔 예약번호
+          th(style='max-width:10%') 메모
+      tbody
+        tr
+          td.text-left 1
+          td.text-left 2018-10-30(월) 20:41
+          td.text-left
+            a(href='#', data-toggle='popover', title='이진화', data-content='010-2268-5399', data-placement='top') 이진화
+          td.text-left
+            | SUPERIOR ROOM (더블)
+            small.text-muted.ml-1 [11♥11데이] 와인제공PKG
+          td 2
+          td 18.11.03(금)
+          td 18.11.04(토)
+          td 1
+          td 100,000
+          td 90,000
+          td 판매완료
+          td
+            a(href='#') 18035685
+          td
+            a(href='#') 입력
+        tr
+          td.text-left 2
+          td.text-left 2018-10-30(월) 20:51
+          td.text-left
+            a(href='#', data-toggle='popover', title='김인이', data-content='010-2268-5399', data-placement='top') 김인이
+          td.text-left Deluxe Room (더블)
+          td 1
+          td 18.11.03(금)
+          td 18.11.04(토)
+          td 1
+          td 180,000
+          td 17,000
+          td 판매완료
+          td
+            a(href='#') 입력
+          td
+            a(href='#') 2세 아기. 베이비크립 요청.
+        tr
+          td.text-left 3
+          td.text-left 2018-10-29(월) 09:00
+          td.text-left
+            a(href='#', data-toggle='popover', title='Micheal Simpson', data-content='+44 23 7681 1111, mich.sim@gmail.com', data-placement='top') Micheal Simpson
+          td.text-left Deluxe Room (더블)
+          td 1
+          td 18.12.24(금)
+          td 18.12.25(토)
+          td 1
+          td 100,000
+          td 90,000
+          td.text-danger 판매취소
+          td
+            a(href='#') 입력
+          td
+            a(href='#') 입력
+
+    //- table.table.table-sm.table-hover
+      thead
+        tr
+          th 고객명
+          th 멤버#
+          th 체크인
+          th 숙박일
+          th 체크아웃
+          th 객실#
+          th 어른
+          th 소아
+          th 유아
+      tbody
+        each val in data
+          tr
+            td= val[0]
+            td= val[1]
+            td= val[2]
+            td= val[3]
+            td= val[4]
+            //- td= val[5]
+            td
+              select.selectpicker(data-width='fit', data-size='10', data-live-search='true')
+                option 미배정
+                optgroup(label='Twin')
+                  option 501
+                  option 502
+                  option 504
+                  option 505
+                  option 509
+                optgroup(label='Family Suite')
+                  option 511
+                  option 522
+                  option 702
+                  option 705
+                optgroup(label='Deluxe')
+                  option 803
+            td= val[6]
+            td= val[7]
+            td= val[8]
+    nav.mt-5
+      ul.pagination.justify-content-center
+        li.page-item.disabled
+          a.page-link(href='#', tabindex='-1') 처음
+        li.page-item.disabled
+          a.page-link(href='#') 이전
+        li.page-item
+          a.page-link(href='#') 1
+        li.page-item.active
+          a.page-link(href='#')
+            | 2
+            span.sr-only (current)
+        li.page-item
+          a.page-link(href='#') 3
+        li.page-item
+          a.page-link(href='#') 다음
+        li.page-item
+          a.page-link(href='#') 마지막
+
+  //- .board
+    span.mr-3 ☰건-하늘
+    span.mr-3 ☱태-연못
+    span.mr-3 ☲이-불
+    span.mr-3 ☳진-천둥
+    span.mr-3 ☴손-바람
+    span.mr-3 ☵감-물
+    span.mr-3 ☶간-산
+    span.mr-3 ☷곤-땅
